@@ -1,5 +1,7 @@
 #! /bin/bash
 
+curdir=pwd
+
 echo "\033[31m Downloading Vim \033[0m"
 sudo apt-get install vim
 
@@ -16,6 +18,6 @@ echo "\033[31m Downloading taglist \033[0m"
 cd ~/.vim/bundle && \
 wget "http://vim.sourceforge.net/scripts/download_script.php?src_id=19574" -O taglist.zip && \
 mkdir taglist && mv taglist.zip taglist/ && unzip taglist/taglist.zip && \
-rm taglist/taglist.zip
+rm taglist/taglist.zip 
 
-cp ./.vimrc ~/
+cd curdir && cp .vimrc ~/

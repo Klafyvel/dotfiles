@@ -17,3 +17,5 @@ cd ~/.vim/bundle && \
 wget "http://vim.sourceforge.net/scripts/download_script.php?src_id=19574" -O taglist.zip && \
 mkdir taglist && mv taglist.zip taglist/ && unzip taglist/taglist.zip && \
 rm taglist/taglist.zip
+
+cp ./.vimrc ~/

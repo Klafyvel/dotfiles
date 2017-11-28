@@ -1,40 +1,162 @@
-runtime! debian.vim
+" Vi sucks
+set nocompatible
 
-if has("syntax")
-  syntax on
-endif
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'kien/ctrlp.vim'
 
-set background=dark
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set mouse=a		" Enable mouse usage (all modes)
+" Airline theme
+let g:airline_theme='simple'
 
-set number
+" Open nerdtree
+" autocmd vimenter * NERDTree
 
-set nowrap
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
+" Encoding
+set encoding=utf-8
+set fileencoding=utf-8
 
-set nowb
-set noswapfile
-set noar
-
-highlight NoTabs ctermbg=red ctermfg=white guibg=#592929
-match NoTabs /\t/
-
-filetype on
-
-let Tlist_Process_File_Always = 1
-let Tlist_Exit_Only_Window = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_Auto_Open = 1
-let Tlist_Display_Prototype = 1
-
-execute pathogen#infect()
+" Syntax options
+syn on
+let python_highlight_all=1
 syntax on
 
-autocmd vimenter * NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Indent options
+set showmatch
+set shiftwidth=4 softtabstop=4
+set tabstop=4 " Size of a tab character
+set smartindent
+
+" Mouse is evil, but sometimes useful
+set mouse=a
+
+" Interface
+set number
+
+set showcmd
+set colorcolumn=80
+set ruler
+set scrolloff=3
+set ls=2
+
+" Allow files to be hidden in order to call :e without having to save
+set hidden
+
+" No audible bell but visual bell instead
+set visualbell
+set noerrorbells
+
+" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Docstrings in folded code
+let g:SimpylFold_docstring_preview=1
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+" Faster scroll
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" Changing leader key for a more azerty-friendly one (or not)
+let mapleader = ','
+
+" Do the same but with another key for the local leader key
+let maplocalleader = ';'
+
+" Leader bindings
+" nmap <silent> <Leader>nu :set relativenumber<CR>
+nnoremap <silent> <Leader>sp :set spell!<CR>
+nnoremap <silent> <Leader>b :b#<CR>
+
+fun! StripTrailingWhitespace()
+    " Do not strip the whitespaces on these specific filetypes
+    if &ft =~ 'markdown'
+        return
+    endif
+    %s/\s\+$//e
+endfun
+
+" Autocmd stuff
+if has("autocmd")
+
+    " Delete all useless whitespaces at the end of each line on saving
+    au BufWritePre * call StripTrailingWhitespace()
+
+    " Remember location in file
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal g'\"" | endif
+
+    " Highlight trailing spaces
+    au BufWinEnter * hi ExtraWhitespace ctermbg=red guibg=red
+    au BufWinEnter * match ExtraWhitespace /\s\+$/
+
+    " Custom syntax highlighting for specific extensions
+
+    " C and C++ files
+    au BufNewFile,BufRead *.h,*.c set ft=c.doxygen
+    au BufNewFile,BufRead *.hpp,*.cpp set ft=cpp.doxygen
+
+    " Yaml and JSON data files
+    au BufRead,BufNewFile *.{yml,yaml} set ft=yaml
+    au BufNewFile,BufRead *.json set ft=javascript
+
+    " Eliom files for Ocsigen
+    au BufNewFile,BufRead *.eliom set ft=ocaml
+
+    " Markdown
+    au BufRead,BufNewFile *.md set ft=markdown
+
+    " Other misc autocmds
+
+    " Autowrap on editing mails
+    au BufRead /tmp/mutt-* set tw=72 colorcolumn=72
+
+endif
+
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" Wordwrap
+set wrap
+set linebreak
+
+" Showing invisible characters with cool unicode chars
+exec "set listchars=tab:\uBB ,trail:\uB7,nbsp:\u237D"
+set list
+
+hi NonText ctermfg=8 guifg=grey
+hi SpecialKey ctermfg=8 guifg=grey
+
+" Spellchecking
+set spelllang=~/.vim/spell/fr.utf-8.spl
+set spellfile=~/.vim/spell/fr.utf-8.add
+
+" Completion
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete

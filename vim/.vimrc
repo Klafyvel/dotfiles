@@ -160,3 +160,8 @@ set spellfile=~/.vim/spell/fr.utf-8.add
 " Completion
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+
+let g:ycm_autoclose_preview_window_after_completion=1
+
+" open NERDTree with Ctrl+t
+map <C-t> :NERDTree <CR>

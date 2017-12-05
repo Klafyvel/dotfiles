@@ -18,6 +18,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'kien/ctrlp.vim'
+Plugin 'tell-k/vim-autopep8'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -165,3 +166,6 @@ let g:ycm_autoclose_preview_window_after_completion=1
 
 " open NERDTree with Ctrl+t
 map <C-t> :NERDTree <CR>
+
+" run Autopep8 on F8
+nmap <F8> :Autopep8 <CR>

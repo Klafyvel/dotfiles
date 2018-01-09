@@ -14,7 +14,6 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'kien/ctrlp.vim'
@@ -69,16 +68,6 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-" Docstrings in folded code
-let g:SimpylFold_docstring_preview=1
-
-" Enable folding with the spacebar
-nnoremap <space> za
 
 " Faster scroll
 nnoremap <C-e> 3<C-e>
@@ -165,7 +154,12 @@ set omnifunc=syntaxcomplete#Complete
 let g:ycm_autoclose_preview_window_after_completion=1
 
 " open NERDTree with Ctrl+t
-map <C-t> :NERDTree <CR>
+map <C-t> :NERDTreeToggle <CR>
+
+" tab
+map <C-Left> gT <CR>
+map <C-Reft> gt <CR>
+map <C-n> :tabnew <CR>
 
 " run Autopep8 on F8
 nmap <F8> :Autopep8 <CR>

@@ -16,3 +16,6 @@ cp .vimrc ~/
 echo "\033[31m Downloading Vim extensions \033[0m"
 vim +PluginInstall +qall
 echo "\033[31m Done \033[0m"
+
+echo "\033[31m Installing YouCompleteMe \033[0m"
+exec ~/.vim/bundle/YouCompleteMe/install.sh

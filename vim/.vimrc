@@ -158,7 +158,7 @@ map <C-t> :NERDTreeToggle <CR>
 
 " tab
 map <C-Left> gT <CR>
-map <C-Reft> gt <CR>
+map <C-Right> gt <CR>
 map <C-n> :tabnew <CR>
 
 " run Autopep8 on F8

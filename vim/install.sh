@@ -1,21 +1,25 @@
 #! /bin/bash
 
-echo "\033[31m Downloading Vim \033[0m"
-sudo apt install vim
+PIP='pip3'
+INSTALL='sudo apt install'
+PYTHON='python3'
 
-echo "\033[31m Downloading Vundle \033[0m"
+printf "\033[0;32m Downloading Vim \033[0m\n"
+$INSTALL vim
+
+printf "\033[0;32m Downloading Vundle \033[0m\n"
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-echo "\033[31m Downloading autopep8 \033[0m"
-pip install --upgrade autopep8
-echo "\033[31m Downloading flake8 \033[0m"
-pip install --upgrade flake8
+printf "\033[0;32m Downloading autopep8 \033[0m\n"
+$PIP install --upgrade autopep8
+printf "\033[0;32m Downloading flake8 \033[0m\n"
+$PIP install --upgrade flake8
 
-echo "\033[31m Copying .vimrc \033[0m"
+printf "\033[0;32m Copying .vimrc \033[0m\n"
 cp .vimrc ~/
-echo "\033[31m Downloading Vim extensions \033[0m"
+printf "\033[0;32m Downloading Vim extensions \033[0m\n"
 vim +PluginInstall +qall
-echo "\033[31m Done \033[0m"
+printf "\033[0;32m Done \033[0m\n"
 
-echo "\033[31m Installing YouCompleteMe \033[0m"
-exec ~/.vim/bundle/YouCompleteMe/install.sh
+printf "\033[0;32m Installing YouCompleteMe \033[0m\n"
+$PYTHON ~/.vim/bundle/YouCompleteMe/install.py

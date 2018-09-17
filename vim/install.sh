@@ -5,7 +5,7 @@ INSTALL='sudo apt install'
 PYTHON='python3'
 
 printf "\033[0;32m Downloading Vim \033[0m\n"
-$INSTALL vim python3-dev cmake
+$INSTALL vim python3-dev cmake build-essential
 
 printf "\033[0;32m Downloading Vundle \033[0m\n"
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim

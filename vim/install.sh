@@ -1,6 +1,6 @@
 #! /bin/bash
 
-PIP='pip3'
+PIP='python3 -m pip'
 INSTALL='sudo apt install'
 PYTHON='python3'
 
@@ -14,6 +14,8 @@ printf "\033[0;32m Downloading autopep8 \033[0m\n"
 $PIP install --upgrade autopep8
 printf "\033[0;32m Downloading flake8 \033[0m\n"
 $PIP install --upgrade flake8
+printf "\033[0;32m Downloading black \033[0m\n"
+$PIP install --upgrade black
 
 printf "\033[0;32m Copying .vimrc \033[0m\n"
 cp .vimrc ~/

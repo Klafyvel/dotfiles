@@ -18,6 +18,7 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tell-k/vim-autopep8'
+Plugin 'python/black'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -163,3 +164,6 @@ map <C-n> :tabnew <CR>
 
 " run Autopep8 on F8
 nmap <F8> :Autopep8 <CR>
+
+" run black at save
+autocmd BufWritePre *.py execute ':Black'

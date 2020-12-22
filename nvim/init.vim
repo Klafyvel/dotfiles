@@ -25,8 +25,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jpalardy/vim-slime'
 Plug 'JuliaEditorSupport/julia-vim'
 
-" I am sorry litte computer, I do not want to harm you, but I have to.
-Plug 'daeyun/vim-matlab', { 'do': function('DoRemote') }
+Plug 'dracula/vim', { 'as': 'dracula' }
+
 
 call plug#end()
 
@@ -226,7 +226,7 @@ augroup end
 
 " exit terminal with ESC
 tnoremap <Esc> <C-\><C-n>
-nnoremap <F1> :vsplit term://julia<CR>i
+nnoremap <F1> :vsplit term:///home/klafyvel/.local/bin/julia<CR>i
 nnoremap <F2> :vsplit term://zsh<CR>i
 nnoremap <F3> :vsplit term://bpython3<CR>i
 
@@ -237,12 +237,6 @@ tnoremap <C-Left> <C-\><C-n>:vertical resize -2<CR>i
 tnoremap <C-Right> <C-\><C-n>:vertical resize +2<CR>i
 
 tnoremap <C-t> <C-\><C-n>:NERDTreeToggle<CR>
-
-" }}}
-
-" Matlab {{{
-
-let g:matlab_server_split = 'horizontal'
 
 " }}}
 

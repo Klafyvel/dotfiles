@@ -5,27 +5,26 @@ endfunction
 
 call plug#begin()
 
-Plug 'rafi/awesome-vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'mhinz/vim-startify'
+Plug 'ryanoasis/vim-devicons'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'lervag/vimtex'
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+Plug 'klafyvel/vim-slime'
+Plug 'klafyvel/vim-slime-cells'
 
-Plug 'jpalardy/vim-slime'
 Plug 'JuliaEditorSupport/julia-vim'
-
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'kdheepak/JuliaFormatter.vim'
+Plug 'neovim/nvim-lsp'
 
 
 call plug#end()
@@ -102,17 +101,9 @@ nnoremap <silent> <Leader>b :TagbarToggle<CR>
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" netrw
-nnoremap <leader>ee :Explore<CR>
-nnoremap <leader>le :Lexplore<bar>vertical resize 30<CR>
-
 " move block of code
 vnoremap J :m '>+1<cr>gv=gv
 vnoremap K :m '<-2<cr>gv=gv
-
-nnoremap <leader>a :call SwitchHeader("find")<CR>
-nnoremap <leader>va :call SwitchHeader("vert sf")<CR>
-nnoremap <leader>ta :call SwitchHeader("tab sf")<CR>
 
 " }}}
 
@@ -136,8 +127,6 @@ set showmatch
 
 " Better indentation
 set smartindent
-set cindent
-set cino=j1,(0,ws,Ws " Better C++ indentation of lambda function
 
 " french and english spelling
 set spelllang=en,fr
@@ -156,21 +145,6 @@ let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_theme='base16'
 
-" Coc
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-nnoremap <leader>gd <Plug>(coc-definition)
-
 " vimtex
 let g:vimtex_compiler_progname = 'nvr'
 
@@ -178,8 +152,19 @@ let g:vimtex_compiler_progname = 'nvr'
 map <C-t> :NERDTreeToggle <CR>
 
 " vim-slime
-" let g:slime_target = "tmux"
-let g:slime_target = "neovim"
+let g:slime_target = "tmux"
+let g:slime_cell_delimiter = "^\\s*##"
+"let g:slime_default_config = {"socket_name": get(split($TMUX, ","), 0), "target_pane": ":.1"}
+let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
+let g:slime_dont_ask_default = 1
+let g:slime_bracketed_paste = 1
+let g:slime_no_mappings = 1
+nmap <c-c>v <Plug>SlimeConfig
+
+" vim-slime-cells
+nmap <c-c><c-c> <Plug>SlimeCellsSendAndGoToNext
+nmap <c-c><c-Down> <Plug>SlimeCellsNext
+nmap <c-c><c-Up> <Plug>SlimeCellsPrev
 
 " }}}
 
@@ -207,18 +192,29 @@ augroup filetype_python
     autocmd!
 	" enable folding
 	autocmd bufnewfile,bufread python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120 expandtab autoindent fileformat=unix foldlevel=1
-  autocmd filetype python nnoremap <leader>r :CocCommand python.execInTerminal<CR>
 augroup end
 " }}}
 
 " Julia file settings {{{
 augroup filetype_julia
-  let g:latex_to_unicode_tab = 0
+
   autocmd!
-	autocmd BufNewFile,BufRead *.jl set filetype=julia
-  set tabstop=4
-  set shiftwidth=4
-  set expandtab
+  autocmd BufNewFile,BufRead *.jl set filetype=julia
+  lua << EOF
+require'lspconfig'.julials.setup{}
+EOF
+  let g:latex_to_unicode_tab = 0
+  let g:latex_to_unicode_keymap = 1
+  " normal mode mapping
+  nnoremap <localleader>jf :JuliaFormatterFormat<CR>
+  " visual mode mapping
+  vnoremap <localleader>jf :JuliaFormatterFormat<CR>
+  let g:JuliaFormatter_options = {
+        \ 'style' : 'blue',
+        \ }
+  autocmd Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc tabstop=2 shiftwidth=2 expandtab autoindent
+  nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+  nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 augroup end
 " }}}
 
@@ -226,7 +222,7 @@ augroup end
 
 " exit terminal with ESC
 tnoremap <Esc> <C-\><C-n>
-nnoremap <F1> :vsplit term:///home/klafyvel/.local/bin/julia<CR>i
+nnoremap <F1> :vsplit term://~/.local/bin/julia<CR>i
 nnoremap <F2> :vsplit term://zsh<CR>i
 nnoremap <F3> :vsplit term://bpython3<CR>i
 
@@ -246,19 +242,3 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " }}}
 
-" Functions {{{
-
-function! SwitchHeader(cmd)
-  let filename = expand("%:t:r")
-  if expand("%:e") == "hpp"
-    let filename = filename . ".cpp"
-    echom filename
-    execute(a:cmd . " " . filename)
-  elseif expand("%:e") == "cpp"
-    let filename = filename . ".hpp"
-    echom filename
-    execute(a:cmd . " " . filename)
-  endif
-endfunction
-
-" }}}

@@ -34,16 +34,18 @@
         "tooltip": false
     },
     "network": {
-        "format": "{icon}",
-        "format-alt": "{ipaddr}/{cidr} {icon}",
-        "format-alt-click": "click-right",
-        "format-icons": {
-            "wifi": ["", "" ,""],
-            "ethernet": [""],
-            "disconnected": [""]
-        },
-        "on-click": "termite -e nmtui",
-    "tooltip": false
+        "interface": "wlan0",
+        "format": "{ifname}",
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "format-disconnected": "",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+        "on-click": "alacritty -e iwctl",
+        "tooltip": true
     },
     "pulseaudio": {
         "format": "{icon}",
@@ -69,10 +71,10 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "",
+            "deactivated": ""
         },
-        "tooltip": false
+        "tooltip": true
     },
     "tray": {
         "icon-size": 18

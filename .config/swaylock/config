@@ -1,0 +1,14 @@
+color=231f20
+inside-color=00000000
+inside-clear-color=00000000
+inside-caps-lock-color=00000000
+inside-ver-color=00000000
+inside-wrong-color=00000000
+text-color=d9d8d8
+text-clear-color=d9d8d8
+text-caps-lock-color=d9d8d8
+text-ver-color=d9d8d8
+text-wrong-color=d9d8d8
+indicator-radius=100
+line-uses-ring
+separator-color=00000000

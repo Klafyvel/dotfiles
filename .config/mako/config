@@ -1,0 +1,4 @@
+border-size=0
+background-color=#285577EE
+on-button-left=exec makoctl menu -n $id rofi -d -p 'Choose Action: '
+padding=10

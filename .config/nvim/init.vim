@@ -14,8 +14,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
 
-Plug 'lervag/vimtex'
-
+Plug 'preservim/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
@@ -26,6 +25,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'kdheepak/JuliaFormatter.vim'
 Plug 'neovim/nvim-lsp'
 
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -126,12 +126,14 @@ set wildignore+=**/build/**
 set showmatch
 
 " Better indentation
-set smartindent
+set autoindent
+filetype plugin indent on
 
 " french and english spelling
 set spelllang=en,fr
 
 " }}}
+
 
 " Plugin options {{{
 
@@ -144,9 +146,6 @@ let g:airline_powerline_fonts=1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_theme='base16'
-
-" vimtex
-let g:vimtex_compiler_progname = 'nvr'
 
 " NerdTree
 map <C-t> :NERDTreeToggle <CR>
@@ -242,3 +241,9 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " }}}
 
+" VIMWIKI {{{
+augroup filetype_vimwiki
+  autocmd!
+  autocmd FileType vimwiki setlocal textwidth=80
+augroup end
+" }}}

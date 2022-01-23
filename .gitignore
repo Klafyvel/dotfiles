@@ -1,0 +1,14 @@
+*
+!*/
+
+!.gitignore
+!.config/alacritty/*
+!.config/nvim/*
+!.zshrc
+!.julia/*
+!.config/sway/*
+!.config/swaylock/*
+!.config/waybar/*
+!.config/swayidle/*
+!.config/mako/*
+!.config/ranger/*

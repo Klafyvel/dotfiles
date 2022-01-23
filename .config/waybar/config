@@ -1,82 +1,104 @@
 {
-    "layer": "bottom",
-    "position": "top",
-    "height": 30,
-
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["tray", "custom/storage", "backlight", "pulseaudio", "network", "idle_inhibitor", "battery", "clock"],
-    "sway/mode": {
-        "format": " {}"
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 40, // Waybar height
+    // "width": 120, // Waybar width
+    // Choose the order of the modules
+    "modules-left": ["clock", "sway/window"],
+    "modules-center": ["sway/workspaces", "sway/mode", "custom/media"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "battery", "network", "tray"],
+    "mode": {
+	"docked": {
+	    "output": ["DP-1"],
+ 	}
     },
-    "sway/workspaces": {
-        "format": "{name}",
-        "disable-scroll": true
-    },
+    // Modules configuration
+     "sway/workspaces": {
+         "disable-scroll": true,
+         "disable-markup" : false,
+         "format": "  {name}  "
+     },
     "sway/window": {
-        "max-length": 80,
+    	"max-length": 50
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\"><span color=\"#ff79c6\"></span>  {}</span>", // Icon: expand-arrows-alt
         "tooltip": false
-    },
-    "clock": {
-        "format": "{:%a %d %b %H:%M}",
-        "tooltip": false
-    },
-    "battery": {
-        "format": "{capacity}% {icon}",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""],
-        "format-charging": "{capacity}% ",
-        "interval": 30,
-        "states": {
-            "warning": 25,
-            "critical": 10
-        },
-        "tooltip": false
-    },
-    "network": {
-        "interface": "wlan0",
-        "format": "{ifname}",
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "format-disconnected": "",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-        "tooltip-format-ethernet": "{ifname} ",
-        "tooltip-format-disconnected": "Disconnected",
-        "max-length": 50,
-        "on-click": "alacritty -e iwctl",
-        "tooltip": true
-    },
-    "pulseaudio": {
-        "format": "{icon}",
-        "format-alt": "{volume} {icon}",
-        "format-alt-click": "click-right",
-        "format-muted": "",
-        "format-icons": {
-            "phone": [" ", " ", " ", " "],
-            "default": ["", "", "", ""]
-        },
-        "scroll-step": 10,
-        "on-click": "pavucontrol",
-        "tooltip": false
-    },
-    "backlight": {
-        "format": "{icon}",
-        "format-alt": "{percent}% {icon}",
-        "format-alt-click": "click-right",
-        "format-icons": ["", ""],
-        "on-scroll-down": "light -A 1",
-        "on-scroll-up": "light -U 1"
     },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        },
-        "tooltip": true
+        }
     },
     "tray": {
-        "icon-size": 18
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "interval": 1,
+        "format": "<span color=\"#ff5555\"></span>  {:%H : %M : %S}",
+        "format-alt": "<span color=\"#bd93f9\"></span>   {:%d / %m / %Y}"
+    },
+    "clock#time": {
+        "interval": 1,
+        "format": "{:%H:%M:%S}",
+        "tooltip": false
+    },
+
+    "clock#date": {
+      "interval": 10,
+      "format": "  {:%e %b %Y}", // Icon: calendar-alt
+      "tooltip-format": "{:%e %B %Y}",
+      "on-click": "~/work/scripts/popup-calendar.sh --popup"
+    },
+    "cpu": {
+        "format": "<span color=\"#f1fa8c\"></span>  {usage}%  ({load})"
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "battery": {
+	"interval": 10,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": [
+            "<span color=\"#ff5555\"></span>",
+            "<span color=\"#ffb86c\"></span>",
+            "<span color=\"#f1fa8c\"></span>",
+            "<span color=\"#50fa7b\"></span>",
+            "<span color=\"#50fa7b\"></span>"
+        ]
+    },
+    "network": {
+        "format-wifi": "",
+        "format-ethernet": "",
+        "format-disconnected": "⚠",
+        "interval" : 7,
+        "on-click": "alacritty -e iwctl",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "tooltip": true
+    },
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "<span color=\"#8be9fd\">{icon}</span>  {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
     }
 }

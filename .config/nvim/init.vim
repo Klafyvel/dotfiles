@@ -1,35 +1,46 @@
 " vim-plug {{{
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
+" function! DoRemote(arg)
+"   UpdateRemotePlugins
+" endfunction
 
-call plug#begin()
+" call plug#begin()
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'mhinz/vim-startify'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'mhinz/vim-startify'
+" Plug 'ryanoasis/vim-devicons'
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-commentary'
+" Plug 'jiangmiao/auto-pairs'
+" Plug 'tpope/vim-commentary'
 
-Plug 'preservim/tagbar'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'preservim/tagbar'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 
-Plug 'klafyvel/vim-slime'
-Plug 'klafyvel/vim-slime-cells'
+" Plug 'klafyvel/vim-slime'
+" Plug 'klafyvel/vim-slime-cells'
 
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'kdheepak/JuliaFormatter.vim'
-Plug 'neovim/nvim-lsp'
+" Plug 'JuliaEditorSupport/julia-vim'
+" Plug 'kdheepak/JuliaFormatter.vim'
+" Plug 'neovim/nvim-lsp'
 
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 
-call plug#end()
+" call plug#end()
 
 " }}}
+
+" packer {{{
+
+lua require('plugins')
+
+augroup packer_user_config
+  autocmd!
+  autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+augroup end
+" }}}
+
 
 " Mappings {{{
 let mapleader = ","
@@ -119,8 +130,8 @@ set shiftwidth=2
 set expandtab
 
 " File fuzzy finding
-set path+=**
-set wildignore+=**/build/**
+" set path+=**
+" set wildignore+=**/build/**
 
 " See matching character
 set showmatch
@@ -131,39 +142,6 @@ filetype plugin indent on
 
 " french and english spelling
 set spelllang=en,fr
-
-" }}}
-
-
-" Plugin options {{{
-
-" vim-airline
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline_powerline_fonts=1
-let g:airline_detect_modified=1
-let g:airline_detect_paste=1
-let g:airline_theme='base16'
-
-" NerdTree
-map <C-t> :NERDTreeToggle <CR>
-
-" vim-slime
-let g:slime_target = "tmux"
-let g:slime_cell_delimiter = "^\\s*##"
-"let g:slime_default_config = {"socket_name": get(split($TMUX, ","), 0), "target_pane": ":.1"}
-let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
-let g:slime_dont_ask_default = 1
-let g:slime_bracketed_paste = 1
-let g:slime_no_mappings = 1
-nmap <c-c>v <Plug>SlimeConfig
-
-" vim-slime-cells
-nmap <c-c><c-c> <Plug>SlimeCellsSendAndGoToNext
-nmap <c-c><c-Down> <Plug>SlimeCellsNext
-nmap <c-c><c-Up> <Plug>SlimeCellsPrev
 
 " }}}
 
@@ -199,21 +177,21 @@ augroup filetype_julia
 
   autocmd!
   autocmd BufNewFile,BufRead *.jl set filetype=julia
-  lua << EOF
-require'lspconfig'.julials.setup{}
-EOF
-  let g:latex_to_unicode_tab = 0
-  let g:latex_to_unicode_keymap = 1
+  "lua << EOF
+"require'lspconfig'.julials.setup{}
+"EOF
+  autocmd Filetype julia let g:latex_to_unicode_tab = 0
+  autocmd Filetype julia let g:latex_to_unicode_keymap = 1
   " normal mode mapping
-  nnoremap <localleader>jf :JuliaFormatterFormat<CR>
+  autocmd Filetype julia nnoremap <localleader>jf :JuliaFormatterFormat<CR>
   " visual mode mapping
-  vnoremap <localleader>jf :JuliaFormatterFormat<CR>
-  let g:JuliaFormatter_options = {
+  autocmd Filetype julia vnoremap <localleader>jf :JuliaFormatterFormat<CR>
+  autocmd Filetype julia let g:JuliaFormatter_options = {
         \ 'style' : 'blue',
         \ }
   autocmd Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc tabstop=2 shiftwidth=2 expandtab autoindent
-  nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-  nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+  autocmd Filetype julia nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+  autocmd Filetype julia nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 augroup end
 " }}}
 

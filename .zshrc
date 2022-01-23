@@ -99,11 +99,25 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+export EDITOR='nvim'
+export PATH="$HOME/.local/bin:$PATH"
+export LD_PRELOAD=/usr/lib64/libstdc++.so.6
+export GRIM_DEFAULT_DIR=$HOME/Images/Screenshots/
+export XDG_CONFIG_HOME=$HOME/.config/
+
+vimwiki () {
+    if [[ $# == 0 ]]
+    then
+        nvim +'VimwikiIndex'
+    elif [[ $1 == 'git' ]]
+    then
+        git -C ~/vimwiki/ ${@:2}
+    else
+        echo 'Usage: vimwiki [git] [args ...]'
+    fi
+}
 
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway
 fi
 
-export EDITOR='nvim'
-export PATH="$HOME/.local/bin:$PATH"
-export LD_PRELOAD=/usr/lib64/libstdc++.so.6

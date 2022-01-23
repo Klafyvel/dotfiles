@@ -145,11 +145,6 @@ set spelllang=en,fr
 
 " }}}
 
-
-" colorscheme zenburn
-colorscheme dracula
-" colorscheme gotham
-
 " Vimscript file settings {{{
 augroup filetype_vim
     autocmd!

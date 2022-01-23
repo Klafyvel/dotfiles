@@ -1,11 +1,9 @@
 *
-!*/
-
 !.gitignore
 !.config/alacritty/*
 !.config/nvim/*
 !.zshrc
-!.julia/*
+!.julia/environments/v1.7/*
 !.config/sway/*
 !.config/swaylock/*
 !.config/waybar/*

@@ -1,104 +1,132 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 40, // Waybar height
-    // "width": 120, // Waybar width
-    // Choose the order of the modules
-    "modules-left": ["clock", "sway/window"],
-    "modules-center": ["sway/workspaces", "sway/mode", "custom/media"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "battery", "network", "tray"],
-    "mode": {
-	"docked": {
-	    "output": ["DP-1"],
- 	}
-    },
-    // Modules configuration
-     "sway/workspaces": {
-         "disable-scroll": true,
-         "disable-markup" : false,
-         "format": "  {name}  "
-     },
-    "sway/window": {
-    	"max-length": 50
-    },
-    "sway/mode": {
-        "format": "<span style=\"italic\"><span color=\"#ff79c6\"></span>  {}</span>", // Icon: expand-arrows-alt
-        "tooltip": false
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-    "tray": {
-        "icon-size": 21,
-        "spacing": 10
-    },
-    "clock": {
-        "interval": 1,
-        "format": "<span color=\"#ff5555\"></span>  {:%H : %M : %S}",
-        "format-alt": "<span color=\"#bd93f9\"></span>   {:%d / %m / %Y}"
-    },
-    "clock#time": {
-        "interval": 1,
-        "format": "{:%H:%M:%S}",
-        "tooltip": false
-    },
-
-    "clock#date": {
-      "interval": 10,
-      "format": "  {:%e %b %Y}", // Icon: calendar-alt
-      "tooltip-format": "{:%e %B %Y}",
-      "on-click": "~/work/scripts/popup-calendar.sh --popup"
-    },
-    "cpu": {
-        "format": "<span color=\"#f1fa8c\"></span>  {usage}%  ({load})"
-    },
-    "memory": {
-        "format": "{}% "
-    },
-    "battery": {
-	"interval": 10,
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon}  {capacity}%",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
-        "format-icons": [
-            "<span color=\"#ff5555\"></span>",
-            "<span color=\"#ffb86c\"></span>",
-            "<span color=\"#f1fa8c\"></span>",
-            "<span color=\"#50fa7b\"></span>",
-            "<span color=\"#50fa7b\"></span>"
-        ]
-    },
-    "network": {
-        "format-wifi": "",
-        "format-ethernet": "",
-        "format-disconnected": "⚠",
-        "interval" : 7,
-        "on-click": "alacritty -e iwctl",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-        "tooltip-format-ethernet": "{ifname} ",
-        "tooltip-format-disconnected": "Disconnected",
-        "tooltip": true
-    },
-    "pulseaudio": {
-        //"scroll-step": 1,
-        "format": "<span color=\"#8be9fd\">{icon}</span>  {volume}%",
-        "format-muted": "",
-        "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "default": ["", ""]
-        },
-        "on-click": "pavucontrol"
+  "layer": "top", // Waybar at top layer
+  "position": "top", // Waybar position (top|bottom|left|right)
+  "height": 40, // Waybar height
+  // "width": 120, // Waybar width
+  // Choose the order of the modules
+  "modules-left": ["clock", "custom/right-arrow-dark", "sway/window", "custom/right-arrow-light"],
+  "modules-center": ["sway/workspaces", "sway/mode", "custom/media"],
+  "modules-right": ["custom/scratchpad-indicator", "idle_inhibitor", "pulseaudio", "battery", "network", "custom/wireguard-manager", "tray"],
+  "mode": {
+    "docked": {
+      "output": ["DP-1"],
     }
+  },
+  // Modules configuration
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "disable-markup" : false,
+    "format": "  {name}  "
+  },
+  "sway/window": {
+    "max-length": 50,
+    "format": "{}" 
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\"><span color=\"#ff79c6\"></span>  {}</span>", // Icon: expand-arrows-alt
+    "tooltip": false
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  "clock": {
+    "interval": 1,
+    "format": "<span color=\"#ff5555\"></span>  {:%H : %M : %S}",
+    "format-alt": "<span color=\"#bd93f9\"></span>   {:%d / %m / %Y}"
+  },
+  "clock#time": {
+    "interval": 1,
+    "format": "{:%H:%M:%S}",
+    "tooltip": false
+  },
+
+  "clock#date": {
+    "interval": 10,
+    "format": "  {:%e %b %Y}", // Icon: calendar-alt
+    "tooltip-format": "{:%e %B %Y}",
+    "on-click": "~/work/scripts/popup-calendar.sh --popup"
+  },
+  "cpu": {
+    "format": "<span color=\"#f1fa8c\"></span>  {usage}%  ({load})"
+  },
+  "memory": {
+    "format": "{}% "
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}  {capacity}%",
+    // "format-good": "", // An empty format will hide the module
+    // "format-full": "",
+    "format-icons": [
+      "<span color=\"#ff5555\"></span>",
+      "<span color=\"#ffb86c\"></span>",
+      "<span color=\"#f1fa8c\"></span>",
+      "<span color=\"#50fa7b\"></span>",
+      "<span color=\"#50fa7b\"></span>"
+    ]
+  },
+  "network": {
+    "format-wifi": "",
+    "format-ethernet": "",
+    "format-disconnected": "⚠",
+    "interval" : 7,
+    "on-click": "alacritty -e sudo iwctl",
+    "tooltip-format": "{ifname} via {gwaddr} ",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname} ",
+    "tooltip-format-disconnected": "Disconnected",
+    "tooltip": true
+  },
+  "pulseaudio": {
+    //"scroll-step": 1,
+    "format": "<span color=\"#8be9fd\">{icon}</span>  {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "default": ["", ""]
+    },
+    "on-click": "pavucontrol"
+  },
+  "custom/scratchpad-indicator": {
+    "interval": 3,
+    "return-type": "json",
+    "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '(recurse(.nodes[]) | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | if ($scratch_nodes|length) > 0 then { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") } else empty end'",
+    "format": "{} 🗗",
+    "on-click": "exec swaymsg 'scratchpad show'",
+    "on-click-right": "exec swaymsg 'move scratchpad'"
+  },
+  "custom/wireguard-manager": {
+    "interval": 3,
+    "return-type": "json",
+    "format-icons": {
+      "connected": "<span color=\"#50fa7b\">VPN: 🔒</span>",
+      "disconnected": "<span color=\"#ff5555\">VPN: 🔓</span>"
+    },
+    "on-click": "exec ~/.config/waybar/wireguard-manager/wireguard-manager.sh -t",
+    "exec": "exec ~/.config/waybar/wireguard-manager/wireguard-manager.sh -s",
+    "format": "{icon}"
+  },
+  "custom/right-arrow-dark": {
+    "format": "",
+    "tooltip": false
+  },
+  "custom/right-arrow-light": {
+    "format": "",
+    "tooltip": false
+  }
 }

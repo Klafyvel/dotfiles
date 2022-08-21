@@ -1,12 +1,13 @@
-*
 !.gitignore
-!.config/alacritty/*
+!.config/wezterm/*
 !.config/nvim/*
 !.zshrc
 !.julia/environments/v1.7/*
+!.julia/environments/v1.8/*
 !.config/sway/*
 !.config/swaylock/*
 !.config/waybar/*
 !.config/swayidle/*
 !.config/mako/*
 !.config/ranger/*
+*

@@ -70,8 +70,8 @@ return require('packer').startup(function()
     'Klafyvel/vim-slime-ext-wezterm',
     config=function ()
       vim.g.slime_bracketed_paste = 1
-      vim.g.slime_target_send = "sime_wezterm#send"
-      vim.g.slime_target_config = "sime_wezterm#config"
+      vim.g.slime_target_send = "slime_wezterm#send"
+      vim.g.slime_target_config = "slime_wezterm#config"
     end
   }
   use {

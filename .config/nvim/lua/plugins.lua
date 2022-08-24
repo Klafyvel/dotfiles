@@ -1,13 +1,14 @@
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
 end
 
 return require('packer').startup(function()
-  use{
+  use {
     'wbthomason/packer.nvim',
-    config = function ()
+    config = function()
       vim.cmd([[
       augroup packer_user_config
       autocmd!
@@ -20,19 +21,19 @@ return require('packer').startup(function()
   -- Appearance
   use {
     "EdenEast/nightfox.nvim",
-    config=function()
+    config = function()
       vim.cmd("colorscheme nightfox")
     end
   }
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt=true},
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     after = "nightfox.nvim",
-    config=function ()
+    config = function()
       require('lualine').setup {
         options = {
-          component_separators = { left = '', right = ''},
-          section_separators = { left = '', right = ''},
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
         }
       }
     end
@@ -59,8 +60,8 @@ return require('packer').startup(function()
   use {
     'jpalardy/vim-slime-ext-plugins',
     requires = 'Klafyvel/vim-slime-ext-wezterm',
-    branch='code-restructure',
-    config=function ()
+    branch = 'code-restructure',
+    config = function()
       vim.cmd([[
       nmap <leader>cv <Plug>SlimeConfig
       ]])
@@ -68,7 +69,7 @@ return require('packer').startup(function()
   }
   use {
     'Klafyvel/vim-slime-ext-wezterm',
-    config=function ()
+    config = function()
       vim.g.slime_bracketed_paste = 1
       vim.g.slime_target_send = "slime_wezterm#send"
       vim.g.slime_target_config = "slime_wezterm#config"
@@ -76,8 +77,8 @@ return require('packer').startup(function()
   }
   use {
     'klafyvel/vim-slime-cells',
-    ft = {'julia'},
-    config=function ()
+    ft = { 'julia' },
+    config = function()
       vim.g.slime_cell_delimiter = "^\\s*##"
       vim.cmd([[
       nmap <leader>cc <Plug>SlimeCellsSendAndGoToNext
@@ -91,7 +92,7 @@ return require('packer').startup(function()
   use {
     -- Ranger in neovim
     'kevinhwang91/rnvimr',
-    config=function ()
+    config = function()
       vim.cmd([[
       nmap <leader>rr :RnvimrToggle<cr>
       ]])
@@ -104,23 +105,24 @@ return require('packer').startup(function()
     requires = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep', 'nvim-telescope/telescope-fzf-native.nvim' },
     config = function()
       local builtins = require('telescope.builtin');
-      vim.keymap.set("n", "<leader>tt", builtins.find_files, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>tg", builtins.git_files, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>tc", builtins.git_commits, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>ts", builtins.spell_suggest, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>tk", builtins.keymaps, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>tf", builtins.current_buffer_fuzzy_find, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>ty", builtins.treesitter, {noremap=true, silent=true})
-      vim.keymap.set("n", "<leader>tb", builtins.buffers, {noremap=true, silent=true})
+      vim.keymap.set("n", "<leader>tt", builtins.find_files, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>tg", builtins.git_files, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>tc", builtins.git_commits, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>ts", builtins.spell_suggest, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>tk", builtins.keymaps, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>tf", builtins.current_buffer_fuzzy_find, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>ty", builtins.treesitter, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>tb", builtins.buffers, { noremap = true, silent = true })
     end
   }
   use {
     "nvim-telescope/telescope-frecency.nvim",
     config = function()
-      require"telescope".load_extension("frecency")
-      vim.keymap.set("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>", {noremap = true, silent = true})
+      require "telescope".load_extension("frecency")
+      vim.keymap.set("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+        { noremap = true, silent = true })
     end,
-    requires = {"tami5/sqlite.lua"}
+    requires = { "tami5/sqlite.lua" }
   }
 
   -- Julia specifics
@@ -163,21 +165,29 @@ return require('packer').startup(function()
     "neovim/nvim-lspconfig",
     opt = true,
     event = "BufReadPre",
-    after = { "mason.nvim", "mason-lspconfig.nvim" },
+    after = { "mason.nvim", "mason-lspconfig.nvim", "nvim-cmp", "LuaSnip" },
     config = function()
       require("lsp").setup()
     end,
   }
-  -- TODO: setup autocompletion an snippets
-  -- use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-  -- use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-  -- use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  -- use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  use {
+    'hrsh7th/nvim-cmp', -- Autocompletion plugin
+    after = { 'LuaSnip' },
+    config = function ()
+      require('cmp_config').setup()
+    end,
+  }
+  use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
+  use {
+    'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
+    after = { "nvim-cmp" }
+  }
+  use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = function() 
-      require('nvim-treesitter.install').update({ with_sync = true })({"julia", "c", "cpp", "python", "vim", "lua"}) 
+    run = function()
+      require('nvim-treesitter.install').update({ with_sync = true })({ "julia", "c", "cpp", "python", "vim", "lua" })
 
     end,
   }

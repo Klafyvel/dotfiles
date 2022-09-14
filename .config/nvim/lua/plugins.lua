@@ -60,10 +60,11 @@ return require('packer').startup(function()
   use {
     'jpalardy/vim-slime-ext-plugins',
     requires = 'Klafyvel/vim-slime-ext-wezterm',
-    branch = 'code-restructure',
     config = function()
       vim.cmd([[
       nmap <leader>cv <Plug>SlimeConfig
+      noremap cs <Plug>SlimeOperator
+      noremap <leader>cl <Plug>SlimeLineSend
       ]])
     end
   }
@@ -77,7 +78,7 @@ return require('packer').startup(function()
   }
   use {
     'klafyvel/vim-slime-cells',
-    ft = { 'julia' },
+    -- ft = { 'julia' },
     config = function()
       vim.g.slime_cell_delimiter = "^\\s*##"
       vim.cmd([[
@@ -142,7 +143,10 @@ return require('packer').startup(function()
     -- ft = {'arduino'},
     config = function()
       vim.g.arduino_use_cli = 1
-      vim.g.arduino_use_slime = 1
+      -- vim.g.arduino_use_slime = 1
+      vim.g.arduino_serial_cmd = "wezterm serial --baud {baud} {port}"
+      vim.g.arduino_auto_baud = 1
+      vim.g.slime_bracketed_paste = 0
       vim.cmd([[
       nnoremap <buffer> <leader>am <cmd>ArduinoVerify<CR>
       nnoremap <buffer> <leader>au <cmd>ArduinoUpload<CR>
@@ -195,6 +199,8 @@ return require('packer').startup(function()
   -- Git
   use 'tpope/vim-fugitive'
 
+  -- Am I a vim nerd ?
+  use 'junegunn/vader.vim'
 
   if packer_bootstrap then
     require('packer').sync()

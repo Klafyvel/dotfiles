@@ -41,6 +41,40 @@ return require('packer').startup(function()
 
   -- Misc.
   use 'vimwiki/vimwiki'
+
+  use {
+    'nvim-neorg/neorg',
+    config = function()
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {},
+          ["core.norg.dirman"] = {
+            config = {
+              workspaces = {
+                journal = "~/notes/journal",
+                home = "~/notes/home",
+                gtd = "~/notes/gtd",
+              }
+            }
+          },
+          ["core.gtd.base"] = {
+            config = {
+              workspace = "gtd"
+            }
+          },
+          ["core.norg.concealer"] = {},
+          ["core.norg.journal"] = {
+            config = {
+              workspace = "journal"
+            }
+          },
+          ["core.norg.qol.toc"] = {}
+        }
+      }
+    end,
+    requires = "nvim-lua/plenary.nvim"
+  }
+
   use {
     'numToStr/Comment.nvim',
     config = function()
@@ -191,7 +225,13 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function()
-      require('nvim-treesitter.install').update({ with_sync = true })({ "julia", "c", "cpp", "python", "vim", "lua" })
+      require('nvim-treesitter.install').update({ with_sync = true })
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = { "julia", "c", "cpp", "python", "vim", "lua", "norg" },
+        highlight = {
+          enable = true,
+        }
+      }
 
     end,
   }

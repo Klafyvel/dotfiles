@@ -30,7 +30,7 @@ function M.setup(client, bufnr)
   vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<leader>lca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>lf',function() vim.lsp.buf.formatting { async = true } end, bufopts)
+  vim.keymap.set('n', '<space>lf',function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 return M

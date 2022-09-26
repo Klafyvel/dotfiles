@@ -62,7 +62,7 @@ return require('packer').startup(function()
               workspace = "gtd"
             }
           },
-          ["core.norg.concealer"] = {},
+          -- ["core.norg.concealer"] = {},
           ["core.norg.journal"] = {
             config = {
               workspace = "journal"

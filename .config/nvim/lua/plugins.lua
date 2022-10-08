@@ -38,6 +38,7 @@ return require('packer').startup(function()
       }
     end
   }
+  use 'junegunn/goyo.vim'
 
   -- Misc.
   use 'vimwiki/vimwiki'
@@ -68,11 +69,12 @@ return require('packer').startup(function()
               workspace = "journal"
             }
           },
-          ["core.norg.qol.toc"] = {}
+          ["core.norg.qol.toc"] = {},
+          ["core.integrations.telescope"] = {}
         }
       }
     end,
-    requires = "nvim-lua/plenary.nvim"
+    requires = {"nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope"}
   }
 
   use {
@@ -155,7 +157,7 @@ return require('packer').startup(function()
     config = function()
       require "telescope".load_extension("frecency")
       vim.keymap.set("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-        { noremap = true, silent = true })
+      { noremap = true, silent = true })
     end,
     requires = { "tami5/sqlite.lua" }
   }
@@ -230,7 +232,16 @@ return require('packer').startup(function()
         ensure_installed = { "julia", "c", "cpp", "python", "vim", "lua", "norg" },
         highlight = {
           enable = true,
-        }
+        },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+          },
+        },
       }
 
     end,

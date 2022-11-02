@@ -62,8 +62,3 @@ autocmd({'BufNewFile','BufRead'}, {
   pattern = '*.jl',
   command = 'set filetype=julia'
 })
-autocmd('InsertEnter', {
-  callback = function()
-    vim.api.nvim_command('normal! zz')
-  end
-})

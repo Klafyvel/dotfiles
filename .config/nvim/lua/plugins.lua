@@ -22,6 +22,7 @@ return require('packer').startup(function()
   use {
     "EdenEast/nightfox.nvim",
     config = function()
+      require('nightfox').init()
       vim.cmd("colorscheme nightfox")
     end
   }
@@ -39,9 +40,9 @@ return require('packer').startup(function()
     end
   }
   use 'junegunn/goyo.vim'
-
+  --
   -- Misc.
-  use 'vimwiki/vimwiki'
+  -- use 'vimwiki/vimwiki'
 
   use {
     'nvim-neorg/neorg',
@@ -83,20 +84,10 @@ return require('packer').startup(function()
       require('Comment').setup()
     end
   }
-  -- use {
-  --   'jpalardy/vim-slime',
-  --   config=function ()
-  --     vim.g.slime_target = "wezterm"
-  --     vim.g.slime_no_mappings = 1
-  --     vim.cmd([[
-  --     nmap <leader>cv <Plug>SlimeConfig
-  --     ]])
-  --   end
-  -- }
   use {
     'jpalardy/vim-slime-ext-plugins',
     requires = 'Klafyvel/vim-slime-ext-wezterm',
-    config = function()
+    setup = function()
       vim.cmd([[
       nmap <leader>cv <Plug>SlimeConfig
       noremap cs <Plug>SlimeOperator
@@ -106,7 +97,7 @@ return require('packer').startup(function()
   }
   use {
     'Klafyvel/vim-slime-ext-wezterm',
-    config = function()
+    setup = function()
       vim.g.slime_bracketed_paste = 1
       vim.g.slime_target_send = "slime_wezterm#send"
       vim.g.slime_target_config = "slime_wezterm#config"
@@ -115,12 +106,13 @@ return require('packer').startup(function()
   use {
     'klafyvel/vim-slime-cells',
     -- ft = { 'julia' },
-    config = function()
-      vim.g.slime_cell_delimiter = "^\\s*##"
+    setup = function()
+      vim.g.slime_cell_delimiter = "^\\s*##--"
       vim.cmd([[
       nmap <leader>cc <Plug>SlimeCellsSendAndGoToNext
       nmap <leader>cj <Plug>SlimeCellsNext
       nmap <leader>ck <Plug>SlimeCellsPrev
+      imap <C-c> ##--
       ]])
     end
   }
@@ -129,13 +121,13 @@ return require('packer').startup(function()
   use {
     -- Ranger in neovim
     'kevinhwang91/rnvimr',
-    config = function()
+    setup = function()
       vim.cmd([[
       nmap <leader>rr :RnvimrToggle<cr>
       ]])
     end
   }
-
+  --
   -- Fuzzy finder
   use {
     'nvim-telescope/telescope.nvim',
@@ -147,28 +139,20 @@ return require('packer').startup(function()
       vim.keymap.set("n", "<leader>tc", builtins.git_commits, { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>ts", builtins.spell_suggest, { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>tk", builtins.keymaps, { noremap = true, silent = true })
-      vim.keymap.set("n", "<leader>tf", builtins.current_buffer_fuzzy_find, { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader><leader>", builtins.current_buffer_fuzzy_find, { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>ty", builtins.treesitter, { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>tb", builtins.buffers, { noremap = true, silent = true })
     end
-  }
-  use {
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require "telescope".load_extension("frecency")
-      vim.keymap.set("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-      { noremap = true, silent = true })
-    end,
-    requires = { "tami5/sqlite.lua" }
   }
 
   -- Julia specifics
   use {
     'JuliaEditorSupport/julia-vim',
     -- ft = {'julia'},
-    config = function()
+    setup = function()
       vim.g.latex_to_unicode_tab = 0
       vim.g.latex_to_unicode_keymap = 1
+      vim.g.julia_blocks = 0
     end
   }
 
@@ -179,7 +163,6 @@ return require('packer').startup(function()
     -- ft = {'arduino'},
     config = function()
       vim.g.arduino_use_cli = 1
-      -- vim.g.arduino_use_slime = 1
       vim.g.arduino_serial_cmd = "wezterm serial --baud {baud} {port}"
       vim.g.arduino_auto_baud = 1
       vim.g.slime_bracketed_paste = 0
@@ -190,22 +173,18 @@ return require('packer').startup(function()
       nnoremap <buffer> <leader>ab <cmd>ArduinoChooseBoard<CR>
       nnoremap <buffer> <leader>ap <cmd>ArduinoChooseProgrammer<CR>
       ]])
-      -- vim.g.slime_target = "slime_wezterm"
-      -- vim.g.slime_default_config = {socket_name="default", target_pane="0"}
-      -- vim.g.slime_dont_ask_default = 1
-      -- vim.g.slime_bracketed_paste = 1
     end
   }
-
+  --
   -- Language Server Protocol stuffs and other syntax utilities
-  -- use 'neovim/nvim-lsp'
-  use "williamboman/mason.nvim"
-  use "williamboman/mason-lspconfig.nvim"
+  -- -- use 'neovim/nvim-lsp'
+  -- use "williamboman/mason.nvim"
+  -- use "williamboman/mason-lspconfig.nvim"
   use {
     "neovim/nvim-lspconfig",
     opt = true,
     event = "BufReadPre",
-    after = { "mason.nvim", "mason-lspconfig.nvim", "nvim-cmp", "LuaSnip" },
+    after = { "nvim-cmp", "LuaSnip" },
     config = function()
       require("lsp").setup()
     end,
@@ -213,9 +192,9 @@ return require('packer').startup(function()
   use {
     'hrsh7th/nvim-cmp', -- Autocompletion plugin
     after = { 'LuaSnip' },
-    config = function ()
-      require('cmp_config').setup()
-    end,
+    -- config = function ()
+    --   require('cmp_config').setup()
+    -- end,
   }
   use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
   use {
@@ -224,12 +203,16 @@ return require('packer').startup(function()
   }
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
+  -- Treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
+    requires = 'nvim-treesitter/playground',
     run = function()
       require('nvim-treesitter.install').update({ with_sync = true })
+    end,
+    config = function()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { "julia", "c", "cpp", "python", "vim", "lua", "norg" },
+        ensure_installed = { "julia", "c", "cpp", "python", "vim", "lua", "norg", "query" },
         highlight = {
           enable = true,
         },
@@ -242,6 +225,24 @@ return require('packer').startup(function()
             node_decremental = "grm",
           },
         },
+        playground = {
+          enable = false,
+          disable = {},
+          updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+          persist_queries = false, -- Whether the query persists across vim sessions
+          keybindings = {
+            toggle_query_editor = 'o',
+            toggle_hl_groups = 'i',
+            toggle_injected_languages = 't',
+            toggle_anonymous_nodes = 'a',
+            toggle_language_display = 'I',
+            focus_language = 'f',
+            unfocus_language = 'F',
+            update = 'R',
+            goto_node = '<cr>',
+            show_help = '?',
+          },
+        },
       }
 
     end,
@@ -250,8 +251,8 @@ return require('packer').startup(function()
   -- Git
   use 'tpope/vim-fugitive'
 
-  -- Am I a vim nerd ?
-  use 'junegunn/vader.vim'
+  -- -- Am I a vim nerd ?
+  -- use 'junegunn/vader.vim'
 
   if packer_bootstrap then
     require('packer').sync()

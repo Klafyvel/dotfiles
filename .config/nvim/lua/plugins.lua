@@ -22,7 +22,6 @@ return require('packer').startup(function()
   use {
     "EdenEast/nightfox.nvim",
     config = function()
-      require('nightfox').init()
       vim.cmd("colorscheme nightfox")
     end
   }

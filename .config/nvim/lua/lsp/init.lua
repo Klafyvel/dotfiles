@@ -22,6 +22,9 @@ local servers = {
             new_config.cmd[1] = julia
         end
     end
+  },
+  ltex={
+    filetypes={ "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "norg" }
   }
 }
 

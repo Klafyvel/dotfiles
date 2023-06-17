@@ -1,8 +1,6 @@
-local M = {}
-
 local servers = {
   pyright={},
-  sumneko_lua={},
+  lua_ls={},
   vimls={},
   arduino_language_server={
     cmd = {
@@ -43,7 +41,7 @@ end
 
 -- local opts = { noremap=true, silent=true }
 
-function M.setup()
+function setup()
   -- require("mason").setup()
   -- require("mason-lspconfig").setup({
     --   automatic_installation = true
@@ -106,4 +104,25 @@ function M.setup()
     }
   end
 
-  return M
+return {
+  {
+    "neovim/nvim-lspconfig",
+    lazy = true,
+    event = "BufReadPre",
+    -- after = { "nvim-cmp", "LuaSnip" },
+    config = setup,
+  },
+  {
+    'hrsh7th/nvim-cmp', -- Autocompletion plugin
+    -- after = { 'LuaSnip' },
+    -- config = function ()
+    --   require('cmp_config').setup()
+    -- end,
+  },
+  'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+  {
+    'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
+    -- after = { "nvim-cmp" }
+  },
+  'L3MON4D3/LuaSnip' -- Snippets plugin
+}

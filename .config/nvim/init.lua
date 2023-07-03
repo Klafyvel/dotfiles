@@ -54,6 +54,8 @@ vim.opt.spelllang="en,fr"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+vim.opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+
 -- AutoCmd
 local autocmd = vim.api.nvim_create_autocmd
 autocmd('CmdlineEnter', {
@@ -75,3 +77,6 @@ autocmd({'BufNewFile','BufRead'}, {
   command = 'set filetype=julia'
 })
 require("lazy").setup("plugins")
+
+vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+

@@ -25,7 +25,7 @@ return {
       vim.g.slime_target_send = "slime_neovim#send"
       vim.g.slime_target_config = "slime_neovim#config"
       -- allows use of PID rather than internal job_id for config see note below this codeblock
-      vim.g.slime_input_pid = 1
+      vim.g.slime_input_pid = 0
     end
   },
   {

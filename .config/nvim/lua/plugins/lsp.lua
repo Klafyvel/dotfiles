@@ -1,3 +1,8 @@
+local words = {}
+for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
+	table.insert(words, word)
+end
+
 local servers = {
   pyright={},
   lua_ls={},
@@ -14,17 +19,55 @@ local servers = {
   clangd={},
   julials={
     on_new_config = function(new_config, _)
-        local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-        if require'lspconfig'.util.path.is_file(julia) then
-	    vim.notify("Hello!")
-            new_config.cmd[1] = julia
-        end
+      local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+      if require'lspconfig'.util.path.is_file(julia) then
+        new_config.cmd[1] = julia
+      end
     end
   },
   ltex={
-    filetypes={ "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "norg" }
+    filetypes={ "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "norg" },
+    additionalRules = {
+      -- To be downloaded here: https://languagetool.org/download/ngram-data/
+      languageModel = '~/ngrams/',
+    },
+    dictionary = {
+      ["en-US"] = words,
+    },
   }
 }
+
+local opts = { noremap=true, silent=true }
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+function setup_keymaps(client, bufnr)
+  vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, opts)
+  vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', '<leader>dN', vim.diagnostic.goto_next, opts)
+  vim.keymap.set('n', '<leader>D', vim.diagnostic.setloclist, opts)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<leader>ls', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<leader>lwa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>lwr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>lwl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<leader>lD', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>lca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>lf',function() vim.lsp.buf.format { async = true } end, bufopts)
+end
 
 local function on_attach(client, bufnr)
   -- Enable completion triggered by <C-X><C-O>
@@ -36,7 +79,7 @@ local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 
   -- Configure key mappings
-  require("lsp.keymaps").setup(client, bufnr)
+  setup_keymaps(client, bufnr)
 end
 
 -- local opts = { noremap=true, silent=true }
@@ -104,25 +147,38 @@ function setup()
     }
   end
 
-return {
-  {
-    "neovim/nvim-lspconfig",
-    lazy = true,
-    event = "BufReadPre",
-    -- after = { "nvim-cmp", "LuaSnip" },
-    config = setup,
-  },
-  {
-    'hrsh7th/nvim-cmp', -- Autocompletion plugin
-    -- after = { 'LuaSnip' },
-    -- config = function ()
-    --   require('cmp_config').setup()
-    -- end,
-  },
-  'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
-  {
-    'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
-    -- after = { "nvim-cmp" }
-  },
-  'L3MON4D3/LuaSnip' -- Snippets plugin
-}
+  return {
+    {
+      "neovim/nvim-lspconfig",
+      lazy = true,
+      event = "BufReadPre",
+      -- after = { "nvim-cmp", "LuaSnip" },
+      config = setup,
+    },
+    {
+      'hrsh7th/nvim-cmp', -- Autocompletion plugin
+      -- after = { 'LuaSnip' },
+      -- config = function ()
+        --   require('cmp_config').setup()
+        -- end,
+      },
+      'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+      {
+        'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
+        -- after = { "nvim-cmp" }
+      },
+      {
+        'L3MON4D3/LuaSnip', -- Snippets plugin
+        config = function ()
+          require("luasnip").config.set_config({ -- Setting LuaSnip config
+
+          -- Enable autotriggered snippets
+          enable_autosnippets = true,
+
+          -- Use Tab (or some other key if you prefer) to trigger visual selection
+          store_selection_keys = "<Tab>",
+          update_events = 'TextChanged,TextChangedI'
+        })
+      end
+    }
+  }

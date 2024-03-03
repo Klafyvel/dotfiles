@@ -12,14 +12,14 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
-set $mod Mod4
+set $mod Mod1
 # Home row direction keys, like vim
-set $left Left
-set $down Down
-set $up Up
-set $right Right
+set $left h
+set $down j
+set $up k
+set $right l
 # Your preferred terminal emulator
-set $term wezterm
+set $term wezterm 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -82,7 +82,7 @@ input 1:1:AT_Translated_Set_2_keyboard xkb_model "pc101"
     bindsym $mod+Return exec $term
 
     # Lock screen
-    bindsym $mod+l exec sleep 0.1 && killall -SIGUSR1 swayidle
+    bindsym $mod+Ctrl+l exec sleep 0.1 && killall -SIGUSR1 swayidle
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -103,8 +103,8 @@ input 1:1:AT_Translated_Set_2_keyboard xkb_model "pc101"
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-    bindsym Print exec slurp | grim -g - | wl-copy
-    bindsym $mod+Print exec slurp | grim -g
+    bindsym Print exec slurp | grim -g - - | wl-copy
+    bindsym $mod+Print exec slurp | grim -g -
 #
 # Moving around:
 #
@@ -137,16 +137,16 @@ input 1:1:AT_Translated_Set_2_keyboard xkb_model "pc101"
     bindsym $mod+Next workspace next
     bindsym $mod+Prior workspace prev
     # Move focused container to workspace
-    bindsym $mod+Alt+1 move container to workspace number 1
-    bindsym $mod+Alt+2 move container to workspace number 2
-    bindsym $mod+Alt+3 move container to workspace number 3
-    bindsym $mod+Alt+4 move container to workspace number 4
-    bindsym $mod+Alt+5 move container to workspace number 5
-    bindsym $mod+Alt+6 move container to workspace number 6
-    bindsym $mod+Alt+7 move container to workspace number 7
-    bindsym $mod+Alt+8 move container to workspace number 8
-    bindsym $mod+Alt+9 move container to workspace number 9
-    bindsym $mod+Alt+0 move container to workspace number 10
+    bindsym $mod+Ctrl+1 move container to workspace number 1
+    bindsym $mod+Ctrl+2 move container to workspace number 2
+    bindsym $mod+Ctrl+3 move container to workspace number 3
+    bindsym $mod+Ctrl+4 move container to workspace number 4
+    bindsym $mod+Ctrl+5 move container to workspace number 5
+    bindsym $mod+Ctrl+6 move container to workspace number 6
+    bindsym $mod+Ctrl+7 move container to workspace number 7
+    bindsym $mod+Ctrl+8 move container to workspace number 8
+    bindsym $mod+Ctrl+9 move container to workspace number 9
+    bindsym $mod+Ctrl+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
@@ -191,8 +191,8 @@ input 1:1:AT_Translated_Set_2_keyboard xkb_model "pc101"
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-    bindsym XF86MonBrightness$down exec brightnessctl set 5%-
-    bindsym XF86MonBrightness$up exec brightnessctl set +5%
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym XF86MonBrightnessUp exec brightnessctl set +5%
     bindsym XF86AudioPlay exec playerctl play-pause
     bindsym XF86AudioNext exec playerctl next
     bindsym XF86AudioPrev exec playerctl previous
@@ -247,7 +247,7 @@ include /etc/sway/config.d/*
 ## Look configuration
 default_border pixel 2
 #gaps inner 30
-font GoMono Nerd Font
+font GoMono Nerd Font 0.01
 
 # Application specific
 # I want Makie.jl figure to be floating by default

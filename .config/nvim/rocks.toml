@@ -1,0 +1,48 @@
+# This is your rocks.nvim plugins declaration file.
+# Here is a small yet pretty detailed example on how to use it:
+#
+# [plugins]
+# nvim-treesitter = "semver_version"  # e.g. "1.0.0"
+
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.29.1"
+"rocks-config.nvim" = "1.6.0"
+"oil.nvim" = "2.9.0"
+tree-sitter-c = "scm"
+tree-sitter-markdown = "scm"
+"nightfox.nvim" = "3.9.3"
+nvim-treesitter-textobjects = "scm"
+"rocks-dev.nvim" = "1.2.1"
+"rocks-git.nvim" = "1.5.1"
+nvim-cmp = "0.0.1"
+luasnip = "2.3.0"
+cmp_luasnip = "scm"
+"telescope.nvim" = "scm"
+
+[plugins."nvim-smuggler"]
+dir = "~/Documents/projets/dev/nvim-smuggler"
+
+[plugins."nvim-treesitter"]
+git = "nvim-treesitter/nvim-treesitter"
+
+[plugins."lsp_lines.nvim"]
+git = "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+
+[plugins.cmp-latex-symbols]
+git = "kdheepak/cmp-latex-symbols"
+
+[plugins.cmp-emoji]
+git = "hrsh7th/cmp-emoji"
+
+[plugins.friendly-snippets]
+git = "rafamadriz/friendly-snippets"
+
+[config]
+auto_setup=true
+colorscheme="nightfox"

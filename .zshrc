@@ -105,19 +105,9 @@ export LD_PRELOAD=/usr/lib64/libstdc++.so.6
 export GRIM_DEFAULT_DIR=$HOME/Images/Screenshots/
 export XDG_CONFIG_HOME=$HOME/.config/
 
-vimwiki () {
-    if [[ $# == 0 ]]
-    then
-        nvim +'VimwikiIndex'
-    elif [[ $1 == 'git' ]]
-    then
-        git -C ~/vimwiki/ ${@:2}
-    else
-        echo 'Usage: vimwiki [git] [args ...]'
-    fi
-}
-
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway
 fi
 
+export PATH=$PATH:~/.julia/bin
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh

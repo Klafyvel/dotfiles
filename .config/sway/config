@@ -241,6 +241,7 @@ bar {
 }
 
 exec mako
+exec udiskie --appindicator --tray
 
 include /etc/sway/config.d/*
 
@@ -251,4 +252,4 @@ font GoMono Nerd Font 0.01
 
 # Application specific
 # I want Makie.jl figure to be floating by default
-for_window [class="Makie"] floating enable
+for_window [title="^Makie$"] floating enable

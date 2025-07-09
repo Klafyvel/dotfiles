@@ -1,6 +1,5 @@
 local rocks_config = {
     rocks_path = vim.env.HOME .. "/.local/share/nvim/rocks",
-    luarocks_binary = vim.env.HOME .. "/.local/share/nvim/rocks/bin/luarocks",
 }
 
 vim.g.rocks_nvim = rocks_config
@@ -17,7 +16,7 @@ local luarocks_cpath = {
 }
 package.cpath = package.cpath .. ";" .. table.concat(luarocks_cpath, ";")
 
-vim.opt.runtimepath:append(vim.fs.joinpath(rocks_config.rocks_path, "lib", "luarocks", "rocks-5.1", "rocks.nvim", "*"))
+vim.opt.runtimepath:append(vim.fs.joinpath(rocks_config.rocks_path, "lib", "luarocks", "rocks-5.1", "*", "*"))
 
 -- Mappings
 vim.g.mapleader = " "
@@ -32,7 +31,7 @@ vim.keymap.set('n', '<C-j>', '<Cmd>resize -2<CR>')
 vim.keymap.set('n', '<C-h>', '<Cmd>vertical resize -2<CR>')
 vim.keymap.set('n', '<C-l>', '<Cmd>vertical resize +2<CR>')
 
-vim.keymap.set('n', '<leader><space>', '<Cmd>noh<CR>')
+vim.keymap.set('n', '<Esc>', '<Cmd>noh<CR>')
 
 vim.keymap.set('n', '<leader>ev', '<Cmd>e $MYVIMRC<CR>')
 vim.keymap.set('n', '<leader>sv', '<Cmd>luafile $MYVIMRC<CR>')
@@ -45,8 +44,8 @@ vim.opt.number=true
 vim.opt.relativenumber=true
 vim.opt.ttimeoutlen=10
 
-vim.opt.tabstop=2
-vim.opt.shiftwidth=2
+vim.opt.tabstop=4
+vim.opt.shiftwidth=4
 vim.opt.expandtab=true
 vim.opt.autoindent=true
 vim.opt.colorcolumn = '80'
@@ -78,4 +77,5 @@ autocmd({'BufNewFile','BufRead'}, {
   command = 'set filetype=julia'
 })
 vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
--- vim.keymap.set("n", "<leader>cc", ":<c-u>norm gcsic]c<cr>", { desc = "Execute cell and go to next cell." })
+vim.keymap.set("n", "<leader>cc", ":<c-u>norm gcsic]c<cr>", { desc = "Execute cell and go to next cell." })
+-- vim.keymap.set("i", "<Enter>", require("blink.cmp").select_and_accept, { desc = "Accept completion suggestion." })

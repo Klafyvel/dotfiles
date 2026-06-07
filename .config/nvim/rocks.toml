@@ -11,16 +11,16 @@
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.45.0"
-"rocks-config.nvim" = "3.1.1"
+"rocks.nvim" = "2.47.0"
+"rocks-config.nvim" = "3.1.2"
 "oil.nvim" = "2.15.0"
 # tree-sitter-c = "scm"
 # tree-sitter-markdown = "scm"
 "nightfox.nvim" = "3.10.0"
 # nvim-treesitter-textobjects = "scm"
-"rocks-dev.nvim" = "1.8.0"
-"rocks-git.nvim" = "2.5.3"
-luasnip = "2.4.0"
+"rocks-dev.nvim" = "1.8.1"
+"rocks-git.nvim" = "2.5.7"
+luasnip = "2.4.1"
 # cmp_luasnip = "scm"
 "telescope.nvim" = "scm"
 # tree-sitter-julia = "scm"
@@ -37,7 +37,6 @@ tree-sitter-yaml = "0.0.36"
 tree-sitter-python = "0.0.46"
 tree-sitter-markdown_inline = "0.0.42"
 tree-sitter-toml = "0.0.31"
-nvim-lspconfig = "2.3.0"
 # tree-sitter-python = "scm"
 # tree-sitter-latex = "scm"
 # cmp-buffer = "scm"
@@ -88,7 +87,7 @@ rev = "3a958361e275bb5996e8393e7b2595b2f40c15ca"
 
 [plugins."blink.cmp"]
 git = "saghen/blink.cmp"
-rev = "v1.4.1"
+rev = "v1.8.0"
 
 [plugins.undotree]
 git = "mbbill/undotree"
